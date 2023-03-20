@@ -1,0 +1,22 @@
+﻿@page "/"
+
+@if (isLoading)
+{
+    <div class="text-center mt-auto mb-auto m-lg-auto mr-auto">
+        <p>Loading config data</p>
+    </div>
+}
+else
+{
+    if (GenerateJsonSample)
+    {
+        <div class="text-center mt-auto mb-auto m-lg-auto mr-auto">
+            <p>Sample generated. Please check browser output console</p>
+        </div>
+    }
+    else
+    {
+        <DynamicFormComponent DynamicData="formModel" />
+    }
+
+}

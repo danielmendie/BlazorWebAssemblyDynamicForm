@@ -1,0 +1,139 @@
+﻿@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+
+<MudGrid Class="justify-center" style="height: 80vh;">
+    <MudItem xs="12" sm="7" Class="mt-auto mb-auto">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                @{
+                    var orderedPosition = ElementPosition.OrderBy(g => g.Value);
+
+                    foreach (var position in orderedPosition)
+                    {
+                        var controlName = position.Key.Split("_").Last();
+                        if (position.Key.StartsWith("TextElements"))
+                        {
+                            var element = DynamicData.TextElements.FirstOrDefault(i => i.Name == controlName);
+                            if(element is not null)
+                            {
+                                switch (element.ElementType)
+                                {
+                                    case ElementType.Text:
+                                    {
+                                        <MudTextField T="string" Label="@(element.PlaceHolder)" Required="@element.IsRequired"
+                            Variant="Variant.Outlined" RequiredError="@element.ErrorOnRequired" @bind-Value="@element.Value" Class="mb-3" />
+                                        break;
+                                    }
+                                case ElementType.RadioButton:
+                                    {
+                                        <div class="d-flex">
+                                            <MudRadioGroup T="string" Required="@element.IsRequired"
+                                RequiredError="@element.ErrorOnRequired" @bind-SelectedOption="@element.Value" Class="mb-3">
+                                                @foreach (var item in element.Options)
+                                                {
+                                                    <MudRadio Option="@item.Key">@item.Value</MudRadio>
+                                                }
+                                            </MudRadioGroup>
+                                        </div>
+                                        break;
+                                    }
+                                case ElementType.Multiline:
+                                    {
+                                        <MudTextField T="string" Label="@(element.PlaceHolder)" Required="@element.IsRequired"
+                            Variant="Variant.Outlined" RequiredError="@element.ErrorOnRequired" Lines="2" @bind-Value="@element.Value" Class="mb-3" />
+                                        break;
+                                    }
+                                case ElementType.DropDown:
+                                    {
+                                        <MudSelect T="string" Label="@element.PlaceHolder" Variant="Variant.Outlined"
+                                        AnchorOrigin="Origin.BottomCenter"
+                            @bind-Value="@element.Value" Class="mb-3">
+                                            @foreach (var item in element.Options)
+                                            {
+                                                <MudSelectItem T="string" Value="@item.Value" />
+                                            }
+                                        </MudSelect>
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        <td>Unknow control</td>
+                                        break;
+                                    }
+                                }
+                            }
+
+                        }
+                        else if (position.Key.StartsWith("NumberElements"))
+                        {
+                            var element = DynamicData.NumberElements.FirstOrDefault(i => i.Name == controlName);
+                            if (element is not null)
+                            {
+                                switch (element.ElementType)
+                                {
+                                    case ElementType.RadioButton:
+                                        {
+                                            <div class="d-flex">
+                                                <MudRadioGroup T="double" Required="@element.IsRequired"
+                                   RequiredError="@element.ErrorOnRequired" @bind-SelectedOption="@element.Value" Class="mb-3">
+                                                    @foreach (var item in element.Options)
+                                                    {
+                                                        <MudRadio Option="@item.Key">@item.Value</MudRadio>
+                                                    }
+                                                </MudRadioGroup>
+                                            </div>
+                                            break;
+                                        }
+                                    case ElementType.Duration:
+                                        {
+                                            <MudNumericField @bind-Value="@element.Value" Label="@element.PlaceHolder" Variant="Variant.Outlined"
+                                            Step="1" Class="mb-3" Min="1" />
+                                            break;
+                                        }
+                                    case ElementType.Slider:
+                                        {
+                                            <MudInputLabel>@element.TextOnLabel</MudInputLabel>
+                                            <MudSlider Variant="Variant.Outlined" @bind-Value="@element.Value" Class="mb-3 pr-5 pl-5" Min="0"
+                                               TickMarks="@(element?.Options == null ? false : true)"
+                                               Step="@(element?.Options == null ? 0 : 100 / element.Options.Values.Count())"
+                                               TickMarkLabels="@(element?.Options == null ? null : element.Options.Values.ToArray())" />
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            <td>Unknow control</td>
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var element = DynamicData.DateElements.FirstOrDefault(i => i.Name == controlName);
+                            if (element is not null)
+                            {
+                                switch (element.ElementType)
+                                {
+                                    case ElementType.Date:
+                                        {
+                                            <MudDatePicker @bind-Date="@element.Value" Variant="Variant.Outlined" Label="@element.TextOnLabel"
+                               Placeholder="@element.PlaceHolder" Class="mb-3" />
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            <td>Unknow control</td>
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+

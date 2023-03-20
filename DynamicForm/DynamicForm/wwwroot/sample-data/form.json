@@ -1,0 +1,73 @@
+{
+  "TextElements": [
+    {
+      "ElementType": 0,
+      "Name": "txtName",
+      "Value": "",
+      "Position": 1,
+      "PlaceHolder": "Enter your full name",
+      "TextOnLabel": "Your Full Name",
+      "IsRequired": true,
+      "ErrorOnRequired": "Full name is required",
+      "Options": null
+    },
+    {
+      "ElementType": 5,
+      "Name": "radGender",
+      "Value": "",
+      "Position": 4,
+      "PlaceHolder": null,
+      "TextOnLabel": "Gender",
+      "IsRequired": false,
+      "ErrorOnRequired": null,
+      "Options": {
+        "M": "Male",
+        "F": "Female"
+      }
+    }
+  ],
+  "NumberElements": [
+    {
+      "ElementType": 2,
+      "Name": "txtAge",
+      "Value": 18.0,
+      "Position": 3,
+      "PlaceHolder": "Enter your age number",
+      "TextOnLabel": "Age in Numbers",
+      "IsRequired": true,
+      "ErrorOnRequired": "Age is required",
+      "Options": null
+    },
+    {
+      "ElementType": 6,
+      "Name": "LiderRanger",
+      "Value": 15.0,
+      "Position": 5,
+      "PlaceHolder": "Specify difficulty level",
+      "TextOnLabel": "Difficult Level",
+      "IsRequired": false,
+      "ErrorOnRequired": "",
+      "Options": {
+        "easy": "Easy",
+        "novice": "Novice",
+        "amatuer": "Amateur",
+        "prof": "Professional",
+        "master": "Master",
+        "grand": "King"
+      }
+    }
+  ],
+  "DateElements": [
+    {
+      "ElementType": 3,
+      "Name": "DateofBirth",
+      "Value": null,
+      "Position": 2,
+      "PlaceHolder": "your date of birth",
+      "TextOnLabel": "Date of Birth",
+      "IsRequired": true,
+      "ErrorOnRequired": "Your date of birth is required",
+      "Options": null
+    }
+  ]
+}
